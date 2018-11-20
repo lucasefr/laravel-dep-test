@@ -40,6 +40,7 @@ class PopulateCommand extends Command
     public function handle()
     {
         //
+        $this->info("Carregando pagina");
         $client = new Client();
         $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?itens=100');
         $resJson = (json_decode($response->getBody()->getContents()));

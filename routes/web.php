@@ -17,5 +17,8 @@ Route::get('/', function () {
 
 Route::resource('deputados', 'DeputadoController');
 
+
 Route::get('/data', 'DeputadoController@getData');
+Route::get('/despesas/data', 'DespesaController@getData');
+Route::get('/despesas', 'DespesaController@getData');
 

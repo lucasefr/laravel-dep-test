@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Despesa;
 use Illuminate\Http\Request;
-
 use GuzzleHttp\Client;
 
 class DespesaController extends Controller
 {
-    public function getData(){
+    public function getData()
+    {
         $client = new Client();
         $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?itens=100');
         // $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/4930/despesas?itens=100');
@@ -20,27 +20,19 @@ class DespesaController extends Controller
             $depJson = (json_decode($depResponse->getBody()->getContents()));
             // dd(($depJson));
             foreach ($depJson->dados as $key => $depDespesa) {
-                # code...
+                // code...
                 // echo $dep->id."<br>";
                 // echo $depDespesa->valorDocumento."<br>"."<br>";
                 $despesa = Despesa::firstOrCreate(array(
-                    'deputado_id'      => $dep->id,
-                    'ano'              => $depDespesa->ano,
-                    'mes'              => $depDespesa->mes,
-                    'tipoDespesa'      => $depDespesa->tipoDespesa,
-                    'dataDocumento'    => $depDespesa->dataDocumento,
-                    'valorDocumento'   => $depDespesa->valorDocumento,
-                    'idDocumento'      => $depDespesa->idDocumento
+                    'deputado_id' => $dep->id,
+                    'ano' => $depDespesa->ano,
+                    'mes' => $depDespesa->mes,
+                    'tipoDespesa' => $depDespesa->tipoDespesa,
+                    'dataDocumento' => $depDespesa->dataDocumento,
+                    'valorDocumento' => $depDespesa->valorDocumento,
+                    'idDocumento' => $depDespesa->idDocumento,
                 ));
             }
-            
-            // $deputado = Deputado::firstOrCreate(array(
-            //     'id'              => $dep->id,
-            //     'nome'            => $dep->nome,
-            //     'siglaPartido'    => $dep->siglaPartido,
-            //     'siglaUf'         => $dep->siglaUf,
-            //     'idLegislatura'   => $dep->idLegislatura
-            // ));
         }
     }
 
@@ -51,8 +43,7 @@ class DespesaController extends Controller
      */
     public function index()
     {
-        //
-        return "Funcionando";
+        return 'Funcionando';
     }
 
     /**
@@ -62,62 +53,61 @@ class DespesaController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Despesa  $despesa
+     * @param \App\Models\Despesa $despesa
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Despesa $despesa)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Despesa  $despesa
+     * @param \App\Models\Despesa $despesa
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Despesa $despesa)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Despesa  $despesa
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Despesa      $despesa
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Despesa $despesa)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Despesa  $despesa
+     * @param \App\Models\Despesa $despesa
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Despesa $despesa)
     {
-        //
     }
 }

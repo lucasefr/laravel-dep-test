@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deputado;
+use App\Models\Proposicoes;
 use Illuminate\Http\Request;
 
-class DeputadoController extends Controller
+class ProposicoesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DeputadoController extends Controller
      */
     public function index()
     {
-        return Deputado::All();
+        //
     }
 
     /**
@@ -24,61 +24,62 @@ class DeputadoController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Deputado $deputado
-     *
+     * @param  \App\Models\Proposicoes  $proposicoes
      * @return \Illuminate\Http\Response
      */
-    public function show(Deputado $deputado)
+    public function show(Proposicoes $proposicoes)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Deputado $deputado
-     *
+     * @param  \App\Models\Proposicoes  $proposicoes
      * @return \Illuminate\Http\Response
      */
-    public function edit(Deputado $deputado)
+    public function edit(Proposicoes $proposicoes)
     {
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Deputado     $deputado
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Proposicoes  $proposicoes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Deputado $deputado)
+    public function update(Request $request, Proposicoes $proposicoes)
     {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Deputado $deputado
-     *
+     * @param  \App\Models\Proposicoes  $proposicoes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Deputado $deputado)
+    public function destroy(Proposicoes $proposicoes)
     {
+        //
     }
 }

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Deputado;
+use App\Models\Despesa;
 use GuzzleHttp\Client;
 
 class PopulateCommand extends Command
@@ -37,13 +38,15 @@ class PopulateCommand extends Command
      */
     public function handle()
     {
-        for ($i = 1; $i < 8; ++$i) {
-            $this->info('Carregando Deputados pagina '.$i);
+        $count = 0;
+        for ($i = 1; $i < 7; ++$i) {
+            $this->info('Carregando pagina '.$i.' de Deputados');
 
             $client = new Client();
             $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina='.$i.'&itens=100');
             $resJson = (json_decode($response->getBody()->getContents()));
             // dd(($resJson));
+
             foreach ($resJson->dados as $key => $dep) {
                 $deputado = Deputado::firstOrCreate(array(
                     'id' => $dep->id,
@@ -52,90 +55,25 @@ class PopulateCommand extends Command
                     'siglaUf' => $dep->siglaUf,
                     'idLegislatura' => $dep->idLegislatura,
                 ));
+                $count = $count + 1;
+                for ($j = 1; $j < 50; ++$j) {
+                    $this->info('Carregando pagina '.$count.'.'.$i.'.'.$j.' de Despesas do deputado '.$dep->nome);
+                    $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&pagina='.$j.'&ano=2018&mes=7&itens=100');
+                    $depJson = (json_decode($depResponse->getBody()->getContents()));
+
+                    foreach ($depJson->dados as $key => $depDespesa) {
+                        $despesa = Despesa::firstOrCreate(array(
+                                'deputado_id' => $dep->id,
+                                'ano' => $depDespesa->ano,
+                                'mes' => $depDespesa->mes,
+                                'tipoDespesa' => $depDespesa->tipoDespesa,
+                                'dataDocumento' => $depDespesa->dataDocumento,
+                                'valorDocumento' => $depDespesa->valorDocumento,
+                                'idDocumento' => $depDespesa->idDocumento,
+                            ));
+                    }
+                }
             }
         }
-        // $this->info('Carregando Deputados');
-        // $client = new Client();
-        // $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?itens=100');
-        // $resJson = (json_decode($response->getBody()->getContents()));
-        // // dd(($resJson));
-        // foreach ($resJson->dados as $key => $dep) {
-        //     $deputado = Deputado::firstOrCreate(array(
-        //         'id' => $dep->id,
-        //         'nome' => $dep->nome,
-        //         'siglaPartido' => $dep->siglaPartido,
-        //         'siglaUf' => $dep->siglaUf,
-        //         'idLegislatura' => $dep->idLegislatura,
-        //     ));
-        // }
-
-        // $client2 = new Client();
-        // $response2 = $client2->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina=2&itens=100');
-        // $resJson2 = (json_decode($response2->getBody()->getContents()));
-        // // dd(($resJson2));
-        // foreach ($resJson2->dados as $key => $dep) {
-        //     $deputado2 = Deputado::firstOrCreate(array(
-        //         'id' => $dep->id,
-        //         'nome' => $dep->nome,
-        //         'siglaPartido' => $dep->siglaPartido,
-        //         'siglaUf' => $dep->siglaUf,
-        //         'idLegislatura' => $dep->idLegislatura,
-        //     ));
-        // }
-
-        // $client3 = new Client();
-        // $response3 = $client3->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina=3&itens=100');
-        // $resJson3 = (json_decode($response3->getBody()->getContents()));
-        // // dd(($resJson2));
-        // foreach ($resJson3->dados as $key => $dep) {
-        //     $deputado3 = Deputado::firstOrCreate(array(
-        //         'id' => $dep->id,
-        //         'nome' => $dep->nome,
-        //         'siglaPartido' => $dep->siglaPartido,
-        //         'siglaUf' => $dep->siglaUf,
-        //         'idLegislatura' => $dep->idLegislatura,
-        //     ));
-        // }
-
-        // $client4 = new Client();
-        // $response4 = $client4->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina=4&itens=100');
-        // $resJson4 = (json_decode($response4->getBody()->getContents()));
-        // // dd(($resJson2));
-        // foreach ($resJson4->dados as $key => $dep) {
-        //     $deputado4 = Deputado::firstOrCreate(array(
-        //         'id' => $dep->id,
-        //         'nome' => $dep->nome,
-        //         'siglaPartido' => $dep->siglaPartido,
-        //         'siglaUf' => $dep->siglaUf,
-        //         'idLegislatura' => $dep->idLegislatura,
-        //     ));
-        // }
-
-        // $client5 = new Client();
-        // $response5 = $client5->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina=5&itens=100');
-        // $resJson5 = (json_decode($response5->getBody()->getContents()));
-        // // dd(($resJson2));
-        // foreach ($resJson5->dados as $key => $dep) {
-        //     $deputado5 = Deputado::firstOrCreate(array(
-        //         'id' => $dep->id,
-        //         'nome' => $dep->nome,
-        //         'siglaPartido' => $dep->siglaPartido,
-        //         'siglaUf' => $dep->siglaUf,
-        //         'idLegislatura' => $dep->idLegislatura,
-        //     ));
-        // }
-
-        // $client6 = new Client();
-        // $response6 = $client6->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina=6&itens=100');
-        // $resJson6 = (json_decode($response6->getBody()->getContents()));
-        // foreach ($resJson6->dados as $key => $dep) {
-        //     $deputado6 = Deputado::firstOrCreate(array(
-        //         'id' => $dep->id,
-        //         'nome' => $dep->nome,
-        //         'siglaPartido' => $dep->siglaPartido,
-        //         'siglaUf' => $dep->siglaUf,
-        //         'idLegislatura' => $dep->idLegislatura,
-        //     ));
-        // }
     }
 }

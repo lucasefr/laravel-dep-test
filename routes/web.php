@@ -15,8 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('deputados', 'DeputadoController');
+// Route::resource('deputados', 'DeputadoController');
 
-Route::get('/data', 'DeputadoController@getData');
+Route::get('/deputados', 'DeputadoController@index');
+
 Route::get('/despesas/data', 'DespesaController@getData');
 Route::get('/despesas', 'DespesaController@index');

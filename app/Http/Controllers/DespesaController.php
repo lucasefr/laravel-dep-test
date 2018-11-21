@@ -11,14 +11,14 @@ class DespesaController extends Controller
     public function getData()
     {
         $client = new Client();
-        $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?itens=100');
+        $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/proposicoes?itens=100');
         // $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/4930/despesas?itens=100');
         $resJson = (json_decode($response->getBody()->getContents()));
-        // dd(($resJson));
+        dd(($resJson->links));
         foreach ($resJson->dados as $key => $dep) {
             $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?itens=100');
             $depJson = (json_decode($depResponse->getBody()->getContents()));
-            // dd(($depJson));
+            dd(($depJson));
             foreach ($depJson->dados as $key => $depDespesa) {
                 // code...
                 // echo $dep->id."<br>";
@@ -43,7 +43,7 @@ class DespesaController extends Controller
      */
     public function index()
     {
-        return 'Funcionando';
+        return Despesa::all();
     }
 
     /**

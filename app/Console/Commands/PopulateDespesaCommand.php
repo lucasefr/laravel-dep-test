@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Despesa;
+use GuzzleHttp\Client;
 
 class PopulateDespesaCommand extends Command
 {
@@ -11,7 +13,7 @@ class PopulateDespesaCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'populate:despesas';
 
     /**
      * The console command description.
@@ -35,24 +37,41 @@ class PopulateDespesaCommand extends Command
      */
     public function handle()
     {
-        $client = new Client();
+        for ($i = 1; $i < 7; ++$i) {
+            $this->info('Carregando pagina '.$i.' de Deputados');
 
-        $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?itens=100');
-        $resJson = (json_decode($response->getBody()->getContents()));
-
-        foreach ($resJson->dados as $key => $dep) {
-            $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?itens=100');
-            $depJson = (json_decode($depResponse->getBody()->getContents()));
-            foreach ($depJson->dados as $key => $depDespesa) {
-                $despesa = Despesa::firstOrCreate(array(
-                    'deputado_id' => $dep->id,
-                    'ano' => $depDespesa->ano,
-                    'mes' => $depDespesa->mes,
-                    'tipoDespesa' => $depDespesa->tipoDespesa,
-                    'dataDocumento' => $depDespesa->dataDocumento,
-                    'valorDocumento' => $depDespesa->valorDocumento,
-                    'idDocumento' => $depDespesa->idDocumento,
-                ));
+            $client = new Client();
+            $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina='.$i.'&itens=100');
+            $resJson = (json_decode($response->getBody()->getContents()));
+            // dd(($resJson));
+            $count = 1;
+            foreach ($resJson->dados as $key => $dep) {
+                // $deputado = Deputado::firstOrCreate(array(
+                //     'id' => $dep->id,
+                //     'nome' => $dep->nome,
+                //     'siglaPartido' => $dep->siglaPartido,
+                //     'siglaUf' => $dep->siglaUf,
+                //     'idLegislatura' => $dep->idLegislatura,
+                // ));
+                for ($j = 1; $j < 50; ++$j) {
+                    $this->info('Carregando pagina '.$count.'.'.$j.' de Despesas do deputado '.$dep->nome);
+                    $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&pagina='.$j.'&itens=100');
+                    $depJson = (json_decode($depResponse->getBody()->getContents()));
+                    $count = $count++;
+                    foreach ($depJson->dados as $key => $depDespesa) {
+                        if ($depDespesa->ano == 2018) {
+                            $despesa = Despesa::firstOrCreate(array(
+                                'deputado_id' => $dep->id,
+                                'ano' => $depDespesa->ano,
+                                'mes' => $depDespesa->mes,
+                                'tipoDespesa' => $depDespesa->tipoDespesa,
+                                'dataDocumento' => $depDespesa->dataDocumento,
+                                'valorDocumento' => $depDespesa->valorDocumento,
+                                'idDocumento' => $depDespesa->idDocumento,
+                            ));
+                        }
+                    }
+                }
             }
         }
     }

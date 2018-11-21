@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proposicao;
+use App\Models\DepProp;
+
 use Illuminate\Http\Request;
 
 use GuzzleHttp\Client;
@@ -11,29 +13,41 @@ class ProposicaoController extends Controller
 {
     public function getData(){
         for ($i = 1; $i < 32; ++$i) {
-            // $this->info('Carregando pagina '.$i.' de Deputados');
+            // $this->info('Carregando pagina '.$i.' de Proposições');
 
             $client = new Client();
-            $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/proposicoes?&pagina='.$i.'1&itens=100');
+            $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/proposicoes?&pagina='.$i.'&itens=100');
             $resJson = (json_decode($response->getBody()->getContents()));
             
-            $count = 1;
             foreach ($resJson->dados as $key => $prop) {
                 
-                $resProposicao = $client->get($prop->uri);
-                $propJson = (json_decode($resProposicao->getBody()->getContents()));
+                $resAutores = $client->get($prop->uri.'/autores');
+                $propAutores = (json_decode($resAutores->getBody()->getContents()));
 
-                $proposicao = Proposicao::firstOrCreate(array(
-                    'id' => $prop->id,
-                    'siglaTipo' => $prop->siglaTipo,
-                    'idTipo' => $prop->idTipo,
-                    'ano' => $prop->ano,
-                    'ementa' => $prop->ementa,
-                    'dataHora' => $propJson->dados->statusProposicao->dataHora,
-                    'idSituacao' => $propJson->dados->statusProposicao->idSituacao,
-                ));
-
+                // dd($propAutores->links);
+                foreach ($propAutores->links as $key => $link) {
+                    $deputadoid = explode('/', $link->href);
+                }
                 
+                // dd($deputadoid[6]);
+                foreach ($propAutores->dados as $key => $autores) {
+                    // dd($autores->uri);
+                    if ($autores->uri != null) {
+                        
+                        $proposicaoid =  explode('/',$autores->uri);
+                        // $deputadoid = explode('/', $propAutores->links->href);
+                        
+                        // print_r($deputadoid[6]);
+                        // print_r('-');
+                        // print_r($proposicaoid[6]);
+                        // // die();
+                        $depProp = DepProp::firstOrCreate(array(
+                            'deputado_id' => $deputadoid[6],
+                            'proposicaos_id' => $proposicaoid[6],
+                        ));
+                    }
+                }
+
                 
             }
         }

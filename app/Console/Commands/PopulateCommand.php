@@ -14,7 +14,7 @@ class PopulateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'populate:bd';
+    protected $signature = 'populate:deputados';
 
     /**
      * The console command description.
@@ -55,24 +55,7 @@ class PopulateCommand extends Command
                     'siglaUf' => $dep->siglaUf,
                     'idLegislatura' => $dep->idLegislatura,
                 ));
-                $count = $count + 1;
-                for ($j = 1; $j < 50; ++$j) {
-                    $this->info('Carregando pagina '.$count.'.'.$i.'.'.$j.' de Despesas do deputado '.$dep->nome);
-                    $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&pagina='.$j.'&ano=2018&mes=7&itens=100');
-                    $depJson = (json_decode($depResponse->getBody()->getContents()));
-
-                    foreach ($depJson->dados as $key => $depDespesa) {
-                        $despesa = Despesa::firstOrCreate(array(
-                                'deputado_id' => $dep->id,
-                                'ano' => $depDespesa->ano,
-                                'mes' => $depDespesa->mes,
-                                'tipoDespesa' => $depDespesa->tipoDespesa,
-                                'dataDocumento' => $depDespesa->dataDocumento,
-                                'valorDocumento' => $depDespesa->valorDocumento,
-                                'idDocumento' => $depDespesa->idDocumento,
-                            ));
-                    }
-                }
+                
             }
         }
     }

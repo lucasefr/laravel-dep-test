@@ -15,7 +15,7 @@ class CreateDeputadosProposicaosTable extends Migration
     {
         Schema::create('deputados_proposicaos', function (Blueprint $table) {
             $table->integer('deputado_id');
-            $table->integer('proposicaos_id');
+            $table->integer('proposicao_id');
             $table->timestamps();
         });
     }

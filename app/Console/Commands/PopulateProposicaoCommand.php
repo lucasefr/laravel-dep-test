@@ -41,7 +41,7 @@ class PopulateProposicaoCommand extends Command
      */
     public function handle()
     {
-        for ($i = 1; $i < 32; ++$i) {
+        for ($i = 1; $i < 33; ++$i) {
             $this->info('Carregando pagina '.$i.' de Proposições');
 
             $client = new Client();

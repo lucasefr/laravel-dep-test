@@ -37,6 +37,7 @@ class PopulateDespesaCommand extends Command
      */
     public function handle()
     {
+        $count = 0;
         for ($i = 1; $i < 7; ++$i) {
             $this->info('Carregando pagina '.$i.' de Deputados');
 
@@ -44,23 +45,17 @@ class PopulateDespesaCommand extends Command
             $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina='.$i.'&itens=100');
             $resJson = (json_decode($response->getBody()->getContents()));
             // dd(($resJson));
-            $count = 1;
+
             foreach ($resJson->dados as $key => $dep) {
-                // $deputado = Deputado::firstOrCreate(array(
-                //     'id' => $dep->id,
-                //     'nome' => $dep->nome,
-                //     'siglaPartido' => $dep->siglaPartido,
-                //     'siglaUf' => $dep->siglaUf,
-                //     'idLegislatura' => $dep->idLegislatura,
-                // ));
+                
+                $count = $count + 1;
                 for ($j = 1; $j < 50; ++$j) {
-                    $this->info('Carregando pagina '.$count.'.'.$j.' de Despesas do deputado '.$dep->nome);
-                    $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&pagina='.$j.'&itens=100');
+                    $this->info('Carregando pagina '.$count.'.'.$i.'.'.$j.' de Despesas do deputado '.$dep->nome);
+                    $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&pagina='.$j.'&ano=2018&mes=7&itens=100');
                     $depJson = (json_decode($depResponse->getBody()->getContents()));
-                    $count = $count++;
+
                     foreach ($depJson->dados as $key => $depDespesa) {
-                        if ($depDespesa->ano == 2018) {
-                            $despesa = Despesa::firstOrCreate(array(
+                        $despesa = Despesa::firstOrCreate(array(
                                 'deputado_id' => $dep->id,
                                 'ano' => $depDespesa->ano,
                                 'mes' => $depDespesa->mes,
@@ -69,7 +64,6 @@ class PopulateDespesaCommand extends Command
                                 'valorDocumento' => $depDespesa->valorDocumento,
                                 'idDocumento' => $depDespesa->idDocumento,
                             ));
-                        }
                     }
                 }
             }

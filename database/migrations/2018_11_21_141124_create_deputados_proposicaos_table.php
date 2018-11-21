@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDespesasTable extends Migration
+class CreateDeputadosProposicaosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class CreateDespesasTable extends Migration
      */
     public function up()
     {
-        Schema::create('despesas', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('deputados_proposicaos', function (Blueprint $table) {
             $table->integer('deputado_id');
-            $table->integer('ano');
-            $table->string('mes');
-            $table->string('tipoDespesa');
-            $table->date('dataDocumento')->nullable();
-            $table->double('valorDocumento');
-            $table->integer('idDocumento');
+            $table->integer('proposicaos_id');
             $table->timestamps();
         });
     }
@@ -33,8 +27,6 @@ class CreateDespesasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('despesas');
+        Schema::dropIfExists('deputados_proposicaos');
     }
 }
-
-

@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Proposicoes extends Model
+class Proposicao extends Model
 {
+    //
     protected $fillable = [
         'id',
-        'deputado_id',
         'siglaTipo',
         'idTipo',
         'ano',

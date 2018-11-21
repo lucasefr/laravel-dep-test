@@ -4,31 +4,34 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProposicoesTable extends Migration
+class CreateProposicaosTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
-        Schema::create('proposicoes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('deputado_id');
+        Schema::create('proposicaos', function (Blueprint $table) {
+            $table->integer('id');
             $table->string('siglaTipo');
             $table->integer('idTipo');
             $table->integer('ano');
-            $table->string('ementa')->nullable();
+            $table->text('ementa');
             $table->date('dataHora');
-            $table->integer('idSituacao');
+            $table->integer('idSituacao')->nullable();
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('proposicoes');
+        Schema::dropIfExists('proposicaos');
     }
 }

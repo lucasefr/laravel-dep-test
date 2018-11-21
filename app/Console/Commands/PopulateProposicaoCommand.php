@@ -4,6 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use App\Models\Proposicao;
+
+use GuzzleHttp\Client;
+
 class PopulateProposicaoCommand extends Command
 {
     /**
@@ -11,14 +15,14 @@ class PopulateProposicaoCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'populate:proposicao';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Making the database populate with Proposicao';
 
     /**
      * Create a new command instance.
@@ -37,6 +41,31 @@ class PopulateProposicaoCommand extends Command
      */
     public function handle()
     {
-        //
+        for ($i = 1; $i < 32; ++$i) {
+            $this->info('Carregando pagina '.$i.' de Proposições');
+
+            $client = new Client();
+            $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/proposicoes?&pagina='.$i.'&itens=100');
+            $resJson = (json_decode($response->getBody()->getContents()));
+            
+            foreach ($resJson->dados as $key => $prop) {
+                
+                $resProposicao = $client->get($prop->uri);
+                $propJson = (json_decode($resProposicao->getBody()->getContents()));
+
+                $proposicao = Proposicao::firstOrCreate(array(
+                    'id' => $prop->id,
+                    'siglaTipo' => $prop->siglaTipo,
+                    'idTipo' => $prop->idTipo,
+                    'ano' => $prop->ano,
+                    'ementa' => $prop->ementa,
+                    'dataHora' => $propJson->dados->statusProposicao->dataHora,
+                    'idSituacao' => $propJson->dados->statusProposicao->idSituacao,
+                ));
+
+                
+                
+            }
+        }
     }
 }

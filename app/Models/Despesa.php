@@ -16,4 +16,6 @@ class Despesa extends Model
         'valorDocumento',
         'idDocumento',
     ];
+
+    
 }

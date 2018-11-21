@@ -14,4 +14,10 @@ class Deputado extends Model
         'siglaUf',
         'idLegislatura',
     ];
+
+    public function despesas()
+    {
+        return $this->hasMany('App\Models\Despesa')->with('despesa', 'despesas');
+    }
 }
+

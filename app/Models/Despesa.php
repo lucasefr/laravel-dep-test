@@ -17,5 +17,8 @@ class Despesa extends Model
         'idDocumento',
     ];
 
-    
+    public function deputado()
+    {
+        return $this->belongsTo('App\Models\Deputado');
+    }
 }

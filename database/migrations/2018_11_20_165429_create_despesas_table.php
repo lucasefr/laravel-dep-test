@@ -8,14 +8,12 @@ class CreateDespesasTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::create('despesas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('deputado_id');
+            $table->integer('deputado_id')->unsigned();
             $table->integer('ano');
             $table->string('mes');
             $table->string('tipoDespesa');
@@ -28,13 +26,9 @@ class CreateDespesasTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
         Schema::dropIfExists('despesas');
     }
 }
-
-

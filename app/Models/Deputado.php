@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deputado extends Model
 {
-    //
     protected $fillable = [
         'id',
         'nome',
@@ -17,7 +16,11 @@ class Deputado extends Model
 
     public function despesas()
     {
-        return $this->hasMany('App\Models\Despesa')->with('despesa', 'despesas');
+        return $this->hasMany(Despesa::class);
+    }
+
+    public function proposicaos()
+    {
+        return $this->hasMany(Proposicao::class);
     }
 }
-

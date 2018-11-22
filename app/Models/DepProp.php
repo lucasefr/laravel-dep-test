@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DepProp extends Model
 {
-    //
-    protected $table = 'deputados_proposicaos';
+    protected $table = 'deputado_proposicao';
 
     protected $fillable = [
         'deputado_id',

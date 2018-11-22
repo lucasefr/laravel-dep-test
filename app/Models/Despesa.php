@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Despesa extends Model
 {
-    //
     protected $fillable = [
         'deputado_id',
         'ano',
@@ -19,6 +18,6 @@ class Despesa extends Model
 
     public function deputado()
     {
-        return $this->belongsTo('App\Models\Deputado');
+        return $this->belongsTo(Deputados::class);
     }
 }

@@ -110,4 +110,16 @@ class DespesaController extends Controller
     public function destroy(Despesa $despesa)
     {
     }
+
+    public function gastadores()
+    {
+        // $sql = 'SELECT * from despesas';
+
+        // dd($sql);
+
+        $despesas = Despesa::all()->where('mes', '=', '3')
+        ->where('deputado_id', '=', '178957');
+
+        return $despesas;
+    }
 }

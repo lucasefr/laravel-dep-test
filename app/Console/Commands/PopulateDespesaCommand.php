@@ -38,20 +38,35 @@ class PopulateDespesaCommand extends Command
     public function handle()
     {
         $count = 0;
-        for ($i = 1; $i < 7; ++$i) {
+        $client = new Client();
+        $uri = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?itens=100');
+        $uriJson = (json_decode($uri->getBody()->getContents()));
+        foreach ($uriJson->links as $key => $refa) {
+            if ($refa->rel == 'last') {
+                $page = explode('=', $refa->href);
+                $a = substr($page[1], 0, 1);
+            }
+        }
+        for ($i = 1; $i <= $a; ++$i) {
             $this->info('Carregando pagina '.$i.' de Deputados');
 
-            $client = new Client();
             $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?&pagina='.$i.'&itens=100');
             $resJson = (json_decode($response->getBody()->getContents()));
-            // dd(($resJson));
 
             foreach ($resJson->dados as $key => $dep) {
-                
                 $count = $count + 1;
-                for ($j = 1; $j < 50; ++$j) {
+                $uri2 = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&ano=2017&itens=100');
+                $uri2Jason = (json_decode($uri2->getBody()->getContents()));
+                foreach ($uri2Jason->links as $key => $refb) {
+                    if ($refb->rel == 'last') {
+                        $pageDesp = explode('=', $refb->href);
+                        $b = substr($pageDesp[2], 0, 1);
+                    }
+                }
+
+                for ($j = 1; $j <= $b; ++$j) {
                     $this->info('Carregando pagina '.$count.'.'.$i.'.'.$j.' de Despesas do deputado '.$dep->nome);
-                    $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&pagina='.$j.'&ano=2018&mes=7&itens=100');
+                    $depResponse = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados/'.$dep->id.'/despesas?&pagina='.$j.'&ano=2017&itens=100');
                     $depJson = (json_decode($depResponse->getBody()->getContents()));
 
                     foreach ($depJson->dados as $key => $depDespesa) {

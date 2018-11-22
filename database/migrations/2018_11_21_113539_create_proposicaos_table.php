@@ -8,13 +8,11 @@ class CreateProposicaosTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::create('proposicaos', function (Blueprint $table) {
-            $table->integer('id');
+            $table->increments('id');
             $table->string('siglaTipo');
             $table->integer('idTipo');
             $table->integer('ano');
@@ -27,8 +25,6 @@ class CreateProposicaosTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

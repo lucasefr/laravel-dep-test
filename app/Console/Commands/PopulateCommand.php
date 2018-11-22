@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Deputado;
-use App\Models\Despesa;
 use GuzzleHttp\Client;
 
 class PopulateCommand extends Command
@@ -39,7 +38,16 @@ class PopulateCommand extends Command
     public function handle()
     {
         $count = 0;
-        for ($i = 1; $i < 7; ++$i) {
+        $client = new Client();
+        $uri = $client->get('https://dadosabertos.camara.leg.br/api/v2/deputados?itens=100');
+        $uriJson = (json_decode($uri->getBody()->getContents()));
+        foreach ($uriJson->links as $key => $ref) {
+            if ($ref->rel == 'last') {
+                $page = explode('=', $ref->href);
+                $a = substr($page[1], 0, 1);
+            }
+        }
+        for ($i = 1; $i <= $a; ++$i) {
             $this->info('Carregando pagina '.$i.' de Deputados');
 
             $client = new Client();
@@ -55,7 +63,6 @@ class PopulateCommand extends Command
                     'siglaUf' => $dep->siglaUf,
                     'idLegislatura' => $dep->idLegislatura,
                 ));
-                
             }
         }
     }

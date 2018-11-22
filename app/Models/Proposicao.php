@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proposicao extends Model
 {
-    //
     protected $fillable = [
         'id',
         'siglaTipo',
@@ -16,4 +15,9 @@ class Proposicao extends Model
         'dataHora',
         'idSituacao',
     ];
+
+    public function deputados()
+    {
+        return $this->belongsToMany(Proposicao::class);
+    }
 }

@@ -41,10 +41,18 @@ class PopulateProposicaoCommand extends Command
      */
     public function handle()
     {
+        $client = new Client();
+        $uri = $client->get('https://dadosabertos.camara.leg.br/api/v2/proposicoes?itens=100');
+        $uriJson = (json_decode($uri->getBody()->getContents()));
+        foreach ($uriJson->links as $key => $ref) {
+            if ($ref->rel == 'last') {
+                $page = explode('=', $ref->href);
+                $a = substr($page[1], 0, 1);
+            }
+        }
         for ($i = 1; $i < 33; ++$i) {
             $this->info('Carregando pagina '.$i.' de Proposições');
 
-            $client = new Client();
             $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/proposicoes?&pagina='.$i.'&itens=100');
             $resJson = (json_decode($response->getBody()->getContents()));
             

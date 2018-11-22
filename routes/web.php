@@ -23,5 +23,6 @@ Route::get('/despesas/data', 'DespesaController@getData');
 Route::get('/despesas', 'DespesaController@index');
 Route::get('/despesas/gastadores', 'DespesaController@gastadores');
 
+
 Route::get('/proposicaos', 'ProposicaoController@index');
 Route::get('/proposicaos/data', 'ProposicaoController@getData');

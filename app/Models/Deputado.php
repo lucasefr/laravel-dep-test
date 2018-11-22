@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Despesa;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,11 +17,11 @@ class Deputado extends Model
 
     public function despesas()
     {
-        return $this->hasMany(Despesa::class);
+        return $this->hasMany('App\Models\Despesa', 'despesa_id');
     }
 
     public function proposicaos()
     {
-        return $this->hasMany(Proposicao::class);
+        return $this->hasMany('App\Models\Proposicao','proposicao_id');
     }
 }

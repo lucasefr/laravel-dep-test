@@ -18,6 +18,6 @@ class Proposicao extends Model
 
     public function deputados()
     {
-        return $this->belongsToMany(Proposicao::class);
+        return $this->belongsToMany('App\Models\Deputado', 'deputado_proposicao', 'proposicao_id', 'deputado_id');
     }
 }

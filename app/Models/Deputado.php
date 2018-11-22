@@ -22,6 +22,6 @@ class Deputado extends Model
 
     public function proposicaos()
     {
-        return $this->hasMany('App\Models\Proposicao','proposicao_id');
+        return $this->belongsToMany('App\Models\Proposicao','deputado_proposicao', 'proposicao_id', 'deputado_id')->withPivot('deputado_proposicao');
     }
 }

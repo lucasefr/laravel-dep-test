@@ -117,7 +117,7 @@ class DespesaController extends Controller
     {
     }
 
-    public function gastadores()
+    public function gastadores($mes)
     {
 
 
@@ -140,7 +140,8 @@ class DespesaController extends Controller
 
         // $despesa = DB::table('despesas')->select('id','deputado_id','ano','mes','valorDocumento')->distinct('deputado_id')->get();
         
-        
+        $sqlJson = DB::select($sql);
+
         return DB::select($sql);
 
 

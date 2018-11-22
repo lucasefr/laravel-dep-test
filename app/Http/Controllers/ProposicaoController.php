@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Despesa;
+use App\Models\Deputado;
+
 use App\Models\Proposicao;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -67,7 +72,7 @@ class ProposicaoController extends Controller
      */
     public function index()
     {
-        return 'hello';
+        return Proposicao::all();
     }
 
     /**
@@ -133,5 +138,9 @@ class ProposicaoController extends Controller
      */
     public function destroy(Proposicao $proposicao)
     {
+    }
+
+    public function projetos(){
+
     }
 }

@@ -12,13 +12,14 @@ class CreateProposicaosTable extends Migration
     public function up()
     {
         Schema::create('proposicaos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id');
             $table->string('siglaTipo');
             $table->integer('idTipo');
             $table->integer('ano');
             $table->text('ementa');
             $table->date('dataHora');
             $table->integer('idSituacao')->nullable();
+            $table->text('nomeDeputado');
             $table->timestamps();
         });
     }

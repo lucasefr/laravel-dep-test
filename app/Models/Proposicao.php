@@ -14,10 +14,11 @@ class Proposicao extends Model
         'ementa',
         'dataHora',
         'idSituacao',
+        'nomeDeputado',
     ];
 
     public function deputados()
     {
-        return $this->belongsToMany('App\Models\Deputado', 'deputado_proposicao', 'proposicao_id', 'deputado_id');
+        return $this->belongsToMany('App\Models\Deputado');
     }
 }

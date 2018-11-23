@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-
 use App\Models\Deputado;
-use App\Models\Proposicao;
-
 use Illuminate\Http\Request;
 
 class DeputadoController extends Controller
@@ -18,7 +14,14 @@ class DeputadoController extends Controller
      */
     public function index()
     {
-        $deputado = Deputado::with('Proposicao')->get();
+        $deputado = Deputado::with('despesas')->get();
+
+        // foreach ($deputado as $key => $dep) {
+        //     if ($dep->proposicaos != null) {
+        //         echo $dep->proposicao;
+        //     }
+        // }
+
         return $deputado;
     }
 
@@ -85,9 +88,5 @@ class DeputadoController extends Controller
      */
     public function destroy(Deputado $deputado)
     {
-    }
-
-    public function projetos(){
-
     }
 }

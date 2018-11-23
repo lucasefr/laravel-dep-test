@@ -9,9 +9,34 @@ use Illuminate\Support\Facades\DB;
 class ProposicaoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Info(
+     *      version="1.0.0",
+     *      title="Api Codificar",
+     *      description="Api Codificar",
+     *      @OA\Contact(
+     *          email="lucasefr@gmail.com"
+     *      ),
+     *     @OA\License(
+     *         name="Apache 2.0",
+     *         url="http://www.apache.org/licenses/LICENSE-2.0.html"
+     *     )
+     * )
+     */
+
+    /**
+     * @OA\Get(
+     *      path="/proposicaos",
+     *      tags={"Projects"},
+     *      summary="Return the list of Projects",
+     *      description="Returns list of projects",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
      *
-     * @return \Illuminate\Http\Response
+     *     )
+     *
+     * Returns list of projects
      */
     public function index()
     {

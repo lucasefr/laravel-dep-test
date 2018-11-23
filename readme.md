@@ -7,7 +7,7 @@ Projeto feito para identificar os deputados que mais gastam da sua renda parlame
 Para fazer o projeto foi criada uma api com o framework php Laravel usando a api externa de dados abertos do site https://dadosabertos.camara.leg.br
 com todas as informações necessarias para sua construção.
 
-A documentação da api da camera se encontra no link: https://dadosabertos.camara.leg.br/swagger/api.html
+A documentação da api da camara se encontra no link: https://dadosabertos.camara.leg.br/swagger/api.html
 
 ## Bibliotecas Externas
 
@@ -19,8 +19,8 @@ Swagger - PAcote para fazer a documentação da api - https://github.com/DarkaOn
 - clonar o projeto (link:https://github.com/lucasefr/laravel-dep-test)
 - Criar um banco de dados de sua preferencia (para fazer o projeto foi usado o Mysql) para população de dados da Api
 - Fazer o comando "composer update" para atualizar as dependencias
+- Criar e configurar o .ENV com as informações do banco de dados
 - Fazer o comando "php artisan key:generate"
-- Configurar o .ENV com as informações do banco de dados
 - Fazer o comando "php artisan migrate" para criar as tabelas do banco de dados
 - Fazer o comando "php artisan populate:deputados" para popular a tabela de deputados
 - Fazer o comando "php artisan populate:proposicao" para popular a tabela de deputados*

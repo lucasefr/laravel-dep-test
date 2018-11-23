@@ -16,12 +16,6 @@ class DeputadoController extends Controller
     {
         $deputado = Deputado::with('despesas')->get();
 
-        // foreach ($deputado as $key => $dep) {
-        //     if ($dep->proposicaos != null) {
-        //         echo $dep->proposicao;
-        //     }
-        // }
-
         return $deputado;
     }
 

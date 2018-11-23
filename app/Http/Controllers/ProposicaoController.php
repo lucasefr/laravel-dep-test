@@ -87,7 +87,8 @@ class ProposicaoController extends Controller
 
     public function projetos()
     {
-        $sql = 'SELECT siglaTipo, ementa FROM proposicaos WHERE idSituacao = 1140 ';
+        $sql = 'SELECT COUNT(nomeDeputado) as total , nomeDeputado
+        FROM proposicaos GROUP BY nomeDeputado ORDER BY total DESC limit 10';
 
         return DB::select($sql);
     }

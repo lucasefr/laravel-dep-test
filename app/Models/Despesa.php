@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Deputado;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Despesa extends Model
@@ -20,8 +18,6 @@ class Despesa extends Model
 
     public function deputado()
     {
-        return $this->belongsTo('App\Models\Deputado','deputado_id');
+        return $this->belongsTo('App\Models\Deputado');
     }
-
-    
 }

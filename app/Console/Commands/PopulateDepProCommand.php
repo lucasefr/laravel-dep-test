@@ -46,8 +46,8 @@ class PopulateDepProCommand extends Command
                 $a = substr($page[1], 0, 2);
             }
         }
-        for ($i = 1; $i < $a; ++$i) {
-            $this->info('Carregando pagina '.$i.' de Proposições');
+        for ($i = 1; $i <= $a; ++$i) {
+            $this->info('Carregando pagina '.$i.' de tabelas Pivot');
 
             $response = $client->get('https://dadosabertos.camara.leg.br/api/v2/proposicoes?&pagina='.$i.'&itens=100');
             $resJson = (json_decode($response->getBody()->getContents()));

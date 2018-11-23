@@ -9,9 +9,20 @@ use Illuminate\Http\Request;
 class DespesaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *      path="/api/despesas",
+     *      tags={"despesas"},
+     *      summary="Retorna lista com despesas de 2017",
+     *      description="Retorna lista de todas as despesas dos deputados em 2017",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      
      *
-     * @return \Illuminate\Http\Response
+     *     )
+     *
+     * Lista de Despesas
      */
     public function index()
     {
@@ -85,6 +96,22 @@ class DespesaController extends Controller
     {
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/despesas/gastos",
+     *      tags={"despesas"},
+     *      summary="Retorna lista de soma total de despesas dos deputados por mes em 2017",
+     *      description="Retorna lista com a soma de gastos de cada deputado por mes em 2017 em ordem decrescente",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      
+     *
+     *     )
+     *
+     * Lista de gastos
+     */
     public function gastos()
     {
         $sql = 'SELECT SUM(valorDocumento) AS soma, dep.nome AS nome,  mes

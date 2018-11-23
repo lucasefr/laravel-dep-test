@@ -1,26 +1,86 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Api Codificar",
-        "description": "Api Codificar",
+        "title": "Projeto Gastadores",
+        "description": "Projeto Gastadores",
         "contact": {
             "email": "lucasefr@gmail.com"
         },
         "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "Lucas Emanuel  ",
+            "url": ""
         },
         "version": "1.0.0"
     },
     "paths": {
+        "/deputados": {
+            "get": {
+                "tags": [
+                    "deputados"
+                ],
+                "summary": "Retorna lista de todos os deputados",
+                "description": "Retorna lista de todos os deputados em exercicio",
+                "operationId": "App\\Http\\Controllers\\DeputadoController::index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/despesas": {
+            "get": {
+                "tags": [
+                    "despesas"
+                ],
+                "summary": "Retorna lista com despesas de 2017",
+                "description": "Retorna lista de todas as despesas dos deputados em 2017",
+                "operationId": "App\\Http\\Controllers\\DespesaController::index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/despesas/gastos": {
+            "get": {
+                "tags": [
+                    "despesas"
+                ],
+                "summary": "Retorna lista de soma total de despesas dos deputados por mes em 2017",
+                "description": "Retorna lista com a soma de gastos de cada deputado por mes em 2017 em ordem decrescente",
+                "operationId": "App\\Http\\Controllers\\DespesaController::gastos",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/proposicaos": {
             "get": {
                 "tags": [
-                    "Projects"
+                    "projetos"
                 ],
-                "summary": "Return the list of Projects",
-                "description": "Returns list of projects",
+                "summary": "Retorna lista de todo os projetos da Camara",
+                "description": "Retorna lista de todo os projetos da Camara",
                 "operationId": "App\\Http\\Controllers\\ProposicaoController::index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/proposicaos/projetos": {
+            "get": {
+                "tags": [
+                    "projetos"
+                ],
+                "summary": "Retorna lista com a soma de projetos dos 10 deputados",
+                "description": "Retorna lista com os 10 deputado que mais enviaram projetos para analise",
+                "operationId": "App\\Http\\Controllers\\ProposicaoController::projetos",
                 "responses": {
                     "200": {
                         "description": "successful operation"

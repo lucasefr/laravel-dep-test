@@ -8,9 +8,20 @@ use Illuminate\Http\Request;
 class DeputadoController extends Controller
 {
     /**
-     * Mostra a lista de Deputados.
+     * @OA\Get(
+     *      path="/api/deputados",
+     *      tags={"deputados"},
+     *      summary="Retorna lista de todos os deputados",
+     *      description="Retorna lista de todos os deputados em exercicio",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      
      *
-     * @return \Illuminate\Http\Response
+     *     )
+     *
+     * Lista de deputados
      */
     public function index()
     {

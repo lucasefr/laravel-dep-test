@@ -11,28 +11,29 @@ class ProposicaoController extends Controller
     /**
      * @OA\Info(
      *      version="1.0.0",
-     *      title="Api Codificar",
-     *      description="Api Codificar",
+     *      title="Projeto Gastadores",
+     *      description="Projeto Gastadores",
      *      @OA\Contact(
      *          email="lucasefr@gmail.com"
      *      ),
      *     @OA\License(
-     *         name="Apache 2.0",
-     *         url="http://www.apache.org/licenses/LICENSE-2.0.html"
+     *         name="Lucas Emanuel  ",
+     *         url=""
      *     )
      * )
      */
 
     /**
      * @OA\Get(
-     *      path="/proposicaos",
-     *      tags={"Projects"},
-     *      summary="Return the list of Projects",
-     *      description="Returns list of projects",
+     *      path="/api/proposicaos",
+     *      tags={"projetos"},
+     *      summary="Retorna lista de todo os projetos da Camara",
+     *      description="Retorna lista de todo os projetos da Camara",
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
      *       ),
+     *      
      *
      *     )
      *
@@ -109,7 +110,22 @@ class ProposicaoController extends Controller
     public function destroy(Proposicao $proposicao)
     {
     }
-
+     /**
+     * @OA\Get(
+     *      path="/api/proposicaos/projetos",
+     *      tags={"projetos"},
+     *      summary="Retorna lista com a soma de projetos dos 10 deputados",
+     *      description="Retorna lista com os 10 deputado que mais enviaram projetos para analise",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *      
+     *
+     *     )
+     *
+     * Top Ten Projects
+     */
     public function projetos()
     {
         $sql = 'SELECT COUNT(nomeDeputado) as total , nomeDeputado

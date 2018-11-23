@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class DeputadoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostra a lista de Deputados.
      *
      * @return \Illuminate\Http\Response
      */
